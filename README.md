@@ -9,7 +9,7 @@
 define('PATH_FRONTEND', '/private/backend');
 define('PATH_BACKEND', '/share/backend');
 ```
-3. В frontend/chat.js need to change
+3. In frontend/chat.js need to change
 ```
 static ajax_url = 'ajax.php';
 ```
@@ -41,7 +41,6 @@ define('DB_PREFIX', 'S_');
 ```
 Subteno::install();
 ```
-She's at the very end.
 7. [Create a Telegram Bot](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) using @BotFather. Write token в **backend/config.php**.
 ```
 define('BOT_TOKEN', 'bot_token_here');
