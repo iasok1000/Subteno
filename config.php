@@ -1,4 +1,6 @@
 <?php
+
+
 // TODO в яве в getNewMessages надо останаливать уже запущенные setTimeout что не было дублей сообщений об ошибке
 define('ABSPATH', __DIR__ . '/');
 
