@@ -48,10 +48,10 @@ define('BOT_TOKEN', 'bot_token_here');
 8. You need to send it message to the bot *BOT_ADMIN_SECRET* from **backend/config.php**
 9. In the browser you need to enter **https://t.me/your_bot_name** go to the bot and send it a message *BOT_ADMIN_SECRET*
 
+## Links
+
+- [Initial code](https://github.com/ehsabd/telegram-live-chat)
+
 ## Donation
-
-[![DONATE](/image/donate.png)](https://donate.stream/yoomoney4100118809080436)
-
-<img width='200px' hieght="auto" alt="DONATE" src="/image/donate.png" href="https://donate.stream/yoomoney4100118809080436">
 
 [<img width='200px' hieght="auto" alt="DONATE" src="/image/donate.png" href="https://donate.stream/yoomoney4100118809080436">](https://donate.stream/yoomoney4100118809080436)
