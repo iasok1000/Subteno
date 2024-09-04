@@ -50,4 +50,6 @@ define('BOT_TOKEN', 'bot_token_here');
 
 ## Donation
 
-- [Buy me a coffee](https://donate.stream/yoomoney4100118809080436)
+[![DONATE](/image/donate.png)](https://donate.stream/yoomoney4100118809080436)
+
+<img width='200px' hieght="auto" alt="DONATE" src="/image/donate.png" href="https://donate.stream/yoomoney4100118809080436">
