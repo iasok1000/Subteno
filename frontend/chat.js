@@ -1,5 +1,5 @@
 class Subteno {
-    static ajax_url = '/subteno/frontend/ajax.php';
+    static ajax_url = 'ajax.php';
     static chat_token = "default";
     static update_his_messages_milliseconds = 1000;
     static message_id = 0;
@@ -7,19 +7,14 @@ class Subteno {
     static is_heart_beating = false;
     static is_chat_minimized = true;
 
-    static update_status(element, status) {
-        if (status == 'err') {
-        } else if (status == 'sent') {
-        }
-    }
     static send_clicked() {
         let text = document.getElementById('subteno_msg_input').value;
         if (!text) {
-            Subteno.error_alert("Please fill all the inputs");
+            // Subteno.error_alert("Please fill all the inputs");
             return;
         }
-        let element = Subteno.add_my_message_to_template(text);
-        Subteno.pushMessage(text, element);
+        Subteno.add_my_message_to_template(text);
+        Subteno.pushMessage(text);
         document.getElementById('subteno_msg_input').value = '';
     }
     static update_his_messages() {
@@ -27,12 +22,6 @@ class Subteno {
         Subteno.getNewMessages();
     }
     static error_alert(msg) {
-        // let el1 = document.getElementById('error_alert');
-        // let el2 = document.getElementById('error_alert_content');
-        // el2.innerHTML = msg;
-        // el1.setAttribute('hidden', false);
-        // setTimeout(() => { el1.setAttribute('hidden', true); }, 2000);
-        // пока продублирую а потом надо совсем убрать error_alert
         if (msg != '') {
             Subteno.add_his_message_to_template(msg, 'style="color:red;background-color:white;"');
         }
@@ -90,22 +79,15 @@ class Subteno {
         Subteno.message_id++;
         return elements;
     }
-    static async pushMessage(msg, element) {
-        // console.log('pushMessage');
+    static async pushMessage(msg) {
         let obj = {};
         obj.func = 'func_1';
         obj.token = Subteno.chat_token;
         obj.message_text = msg;
-        // obj.element = element;
-        // let json = JSON.stringify(obj);
-        // loadAjax('/subteno/frontend/ajax.php', pushMessage_callback, "json=" + encodeURIComponent(json));
         let obj_out = await Subteno.my_fetch(obj);
         if (obj_out.hasOwnProperty('result')) {
             if (obj_out.result === "ok") {
-                Subteno.update_status(element, 'sent');
                 if (!Subteno.first_msg_sent) {
-                    // let msg_input = document.getElementById('subteno_msg_input');
-                    // msg_input.setAttribute('placeholder', 'Написать сообщение...');
                     Subteno.first_msg_sent = true;
                 }
                 if (!Subteno.is_heart_beating) {
@@ -113,7 +95,6 @@ class Subteno {
                 }
             } else if (obj_out.result != '') {
                 Subteno.error_alert(obj_out.messages);
-                //     Subteno.update_status(element, 'err');
             }
         } else {
             Subteno.is_heart_beating = false;
@@ -121,37 +102,26 @@ class Subteno {
         }
     }
     static async getNewMessages() {
-        // console.log('getNewMessages');
         let obj = {};
         obj.func = 'func_2';
         obj.token = Subteno.chat_token;
-        // console.log(obj);
-        // let json = JSON.stringify(obj);
-        // loadAjax('/subteno/frontend/ajax.php', getNewMessages_callback, "json=" + encodeURIComponent(json));
         let obj_out = await Subteno.my_fetch(obj);
-        // console.log(obj_out);
         if (obj_out.hasOwnProperty('result')) {
             if (obj_out.result === "ok") {
-                // Subteno.my_callback_get_message(obj_out.messages);
-                // console.log(obj_out);
                 let data = null;
                 try {
-                    /* if the server have error or something then this part may crash*/
                     data = JSON.parse(obj_out.messages);
                 }
                 catch (e) {
                     Subteno.error_alert("Error, " + e.message);
-                    /* if the server had an error this updating process must continue and not stop*/
                     setTimeout(() => { Subteno.update_his_messages(); }, Subteno.update_his_messages_milliseconds);
                     return;
                 }
-
                 for (let i = 0; i < data.length; i++) {
                     var text = data[i].message_text;
                     Subteno.add_his_message_to_template(text);
                 };
                 if (!Subteno.is_chat_minimized) {
-                    /* recursive calling is better than the timeInterval cause it will send one request at a time */
                     setTimeout(() => { Subteno.update_his_messages(); }, Subteno.update_his_messages_milliseconds);
                     Subteno.is_heart_beating = true;
                 }
@@ -195,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
         el.addEventListener('click', Subteno.subteno_button_clicked);
     });
     document.querySelectorAll('.subteno_header').forEach(el => {
-        // document.querySelectorAll('#minimize').forEach(el => {
         el.addEventListener('click', Subteno.minimize_clicked);
     });
     document.querySelectorAll('#subteno_msg_input').forEach(el => {

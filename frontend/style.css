@@ -116,14 +116,6 @@
     margin-left: auto;
 }
 
-.error_alert {
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 10px;
-    z-index: 100;
-}
-
 .send_button {
     background-color: #FEB30C;
     border-radius: 5px;
@@ -158,5 +150,5 @@
     position: fixed;
     bottom: 3vh;
     right: 3vw;
-    z-index: 22;
+    z-index: 1022;
 }

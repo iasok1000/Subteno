@@ -1,22 +1,27 @@
 <?php
-// TODO в яве в getNewMessages надо останаливать уже запущенные setTimeout что не было дублей сообщений об ошибке
-define('ABSPATH', __DIR__ . '/');
-
+// folder on the server where the frontend folder will be located
+define('PATH_FRONTEND', '/');
+// folder on the server where the backend folder will be located
+define('PATH_BACKEND', '/');
+// Database hostname
 define('DB_HOST', 'localhost');
+// Database username
 define('DB_USER', 'username_here');
+// Database password
 define('DB_PASS', 'password_here');
+// The name of the database
 define('DB_NAME', 'database_name_here');
+// Database port (usually 3306)
 define('DB_PORT', 3306);
-// префикс таблиц в БД
+// prefix of tables in the database
 define('DB_PREFIX', 'S_');
-
-// секретный токен полученный от BotFather
+// secret token received from BotFather
 define('BOT_TOKEN', 'bot_token_here');
-// секретный урл апи телеграма
+// telegram api secret url
 define('API_URL', 'https://api.telegram.org/bot' . BOT_TOKEN . '/');
-// это не секретный токен, его видят все в коде явы на сайте, он нужен чтобы разделить чаты от разных доменов
+// this is not a secret token, everyone can see it in the JS code on the site, it is needed to separate chats from different domains
 define('ADMIN_CHAT_TOKEN', 'default');
-// секретное сообщение, если кто-то начнет чат с ботом BOT_TOKEN и пошлет ему сообщение BOT_ADMIN_SECRET то ему в телеграм в чат с ботом будут приходить сообщения от клиентов у которых в яве chat_token такой же как ADMIN_CHAT_TOKEN
+// secret message, if someone starts a chat with the BOT_TOKEN bot and sends him the message BOT_ADMIN_SECRET, then he will receive messages in telegram chat with the bot from clients whose chat_token in JS is the same as ADMIN_CHAT_TOKEN
 define('BOT_ADMIN_SECRET', 'my_bot_admin_secret_here');
 
-require_once ABSPATH . 'settings.php';
+require_once PATH_BACKEND . 'settings.php';
