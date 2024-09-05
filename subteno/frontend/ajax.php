@@ -4,5 +4,5 @@ if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
     exit();
 }
 session_start();
-require '../backend/config.php';
-require '../backend/message.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/subteno/backend/config.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/subteno/backend/message.php';
