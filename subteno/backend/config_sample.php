@@ -20,4 +20,4 @@ define('ADMIN_CHAT_TOKEN', 'default');
 // secret message, if someone starts a chat with the BOT_TOKEN bot and sends him the message BOT_ADMIN_SECRET, then he will receive messages in telegram chat with the bot from clients whose chat_token in JS is the same as ADMIN_CHAT_TOKEN
 define('BOT_ADMIN_SECRET', 'my_bot_admin_secret_here');
 
-require_once '/subteno/backend/settings.php';
+require_once '../backend/settings.php';

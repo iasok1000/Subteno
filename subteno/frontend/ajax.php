@@ -4,5 +4,5 @@ if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
     exit();
 }
 session_start();
-require '/subteno/backend/config.php';
-require '/subteno/backend/message.php';
+require '../backend/config.php';
+require '../backend/message.php';

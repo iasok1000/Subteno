@@ -71,7 +71,7 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
             $last_heart_beat_utc = $admin_chat['last_heart_beat_utc'];
             if (!empty($last_message_date_utc)) {
                 if ($now_utc > date_create($last_message_date_utc . ' UTC')->add(new DateInterval('PT' . Subteno::LAST_MESSAGE_TIMEOUT_MINUTES . 'M'))) {
-                    Subteno::end_chat($admin_chat, 'Время истекло ' . Subteno::LAST_MESSAGE_TIMEOUT_MINUTES . ' мин.');
+                    Subteno::end_chat($admin_chat, 'Time is up ' . Subteno::LAST_MESSAGE_TIMEOUT_MINUTES . ' min.');
                     $a_out['messages'] = Subteno::ERROR_1_MESS;
                     $a_out['result'] = Subteno::ERROR_1;
                 }
@@ -131,7 +131,7 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
             Subteno::update_admin_chat($admin_chat);
         }
     } else {
-        Subteno::error(Subteno::ERROR_3_MESS_LOG . $token);
+        Subteno::error(Subteno::ERROR_3_MESS_LOG);
         $a_out['messages'] = Subteno::ERROR_3_MESS;
         $a_out['result'] = Subteno::ERROR_3;
     }

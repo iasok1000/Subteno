@@ -168,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function () {
         el.addEventListener('click', Subteno.minimize_clicked);
     });
     document.querySelectorAll('#subteno_msg_input').forEach(el => {
-        el.addEventListener('keydown', (event) => {
-            if (event.code === 13) {
+        el.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
                 Subteno.send_clicked();
             }
         });
