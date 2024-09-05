@@ -3,21 +3,9 @@
 
 ## Installation and Usage
 
-1. Click the Copy button and then Download ZIP. Unzip the saved file and put the **backend** folder on the server, for example in the **/home/www/my-site/private/backend** folder and the **frontend** folder, for example in **/home/www/my-site/share/frontend**.
-2. Open **backend/config.php** and enter the name of these folders, for example:
-```
-define('PATH_FRONTEND', '/private/backend');
-define('PATH_BACKEND', '/share/backend');
-```
-3. In frontend/chat.js need to change
-```
-static ajax_url = 'ajax.php';
-```
-about this
-```
-static ajax_url = '/home/www/my-site/share/frontend/ajax.php';
-```
-4. To work, you need 3 MariaDB tables. To do this, you need to enter the following in **backend/config.php**:
+1. Click the Copy button and then Download ZIP. Unzip and copy the subteno folder to the root of your site.
+
+2. To work, you need 3 MySQL (MariaDB) tables. To do this, you need to enter the following in **/subteno/backend/config.php**:
 ```
 Database hostname
 define('DB_HOST', 'localhost');
@@ -32,21 +20,21 @@ define('DB_PORT', 3306);
 Database table prefix
 define('DB_PREFIX', 'S_');
 ```
-5. In the index.php file of your site, before the **body** tag, you need to insert the line **require**
+3. In the index.php file of your site, before the **body** tag, you need to insert the line **require**
 ```
- require "/home/www/my-site/share/frontend/chat.php";
+ require "/home/www/my-site/subteno/frontend/chat.php";
  </body>
 ```
-6. Go to your website, a button with a chat icon should appear at the bottom right, click on it, enter any message, click on the button with a paper airplane icon, an incoming message will appear **All managers are busy, try again later.**, do not pay attention to him attention. Now the necessary data should be created in the database. Now in **backend/settings.php** you can comment out the line
+4. Go to your website, a button with a chat icon should appear at the bottom right, click on it, enter any message, click on the button with a paper airplane icon, an incoming message will appear **Please check you internet connection.**, do not pay attention to him attention. Now the necessary data should be created in the database. Now in **/private/subteno/backend/settings.php** you can comment out the line
 ```
 Subteno::install();
 ```
-7. [Create a Telegram Bot](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) using @BotFather. Write token в **backend/config.php**.
+5. [Create a Telegram Bot](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) using @BotFather. Write token в **/private/subteno/backend/config.php**.
 ```
 define('BOT_TOKEN', 'bot_token_here');
 ```
-8. You need to send it message to the bot *BOT_ADMIN_SECRET* from **backend/config.php**
-9. In the browser you need to enter **https://t.me/your_bot_name** go to the bot and send it a message *BOT_ADMIN_SECRET*
+6. You need to send it message to the bot *BOT_ADMIN_SECRET* from **/private/subteno/backend/config.php**
+7. In the browser you need to enter **https://t.me/your_bot_name** go to the bot and send it a message *BOT_ADMIN_SECRET*
 
 ## Links
 

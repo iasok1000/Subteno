@@ -1,8 +1,4 @@
 <?php
-ini_set('default_charset', 'utf-8');
-mb_internal_encoding("UTF-8");
-ini_set('error_log', PATH_BACKEND . '/error_and_debug.log');
-
 if ($_SERVER["CONTENT_TYPE"] == 'application/x-www-form-urlencoded' || $_SERVER["CONTENT_TYPE"] == 'multipart/form-data') {
     $a_in = json_decode($_POST['json'], true);
 } else if ($_SERVER["CONTENT_TYPE"] == 'application/json') {

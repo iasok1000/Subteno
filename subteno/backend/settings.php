@@ -246,23 +246,6 @@ class Subteno
         $result = $DB_SUBTENO->prepare($update_cmd, $par_array, false);
         return $result;
     }
-    static function apiRequestWebhook($method, $parameters)
-    {
-        if (!is_string($method)) {
-            self::log_with_sid("Method name must be a string\n");
-            return false;
-        }
-        if (!$parameters) {
-            $parameters = array();
-        } else if (!is_array($parameters)) {
-            self::log_with_sid("Parameters must be an array\n");
-            return false;
-        }
-        $parameters["method"] = $method;
-        header("Content-Type: application/json");
-        echo json_encode($parameters);
-        return true;
-    }
     static function exec_curl_request($handle)
     {
         $response = curl_exec($handle);
@@ -321,28 +304,6 @@ class Subteno
         curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, 0);
         self::log_with_sid('$url:' . $url);
-        return self::exec_curl_request($handle);
-    }
-    static function apiRequestJson($method, $parameters)
-    {
-        if (!is_string($method)) {
-            self::log_with_sid("Method name must be a string\n");
-            return false;
-        }
-        if (!$parameters) {
-            $parameters = array();
-        } else if (!is_array($parameters)) {
-            self::log_with_sid("Parameters must be an array\n");
-            return false;
-        }
-        $parameters["method"] = $method;
-        $handle = curl_init(API_URL);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($handle, CURLOPT_TIMEOUT, 60);
-        curl_setopt($handle, CURLOPT_POST, true);
-        curl_setopt($handle, CURLOPT_POSTFIELDS, json_encode($parameters));
-        curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
         return self::exec_curl_request($handle);
     }
     static function log_with_sid($message)

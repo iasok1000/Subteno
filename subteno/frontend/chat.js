@@ -1,5 +1,5 @@
 class Subteno {
-    static ajax_url = 'ajax.php';
+    static ajax_url = '/subteno/frontend/ajax.php';
     static chat_token = "default";
     static update_his_messages_milliseconds = 1000;
     static message_id = 0;

@@ -1,6 +1,6 @@
 <?php
 ?>
-<link rel="stylesheet" href="<?= PATH_FRONTEND . '/style.css' ?>">
+<link rel="stylesheet" href="/subteno/frontend/style.css">
 
 <div class="subteno_main_holder">
     <div id="subteno_chat" class="subteno subteno_minimized">
@@ -37,4 +37,4 @@
     </div>
 </div>
 
-<script src="<?= PATH_FRONTEND . '/chat.js' ?>"></script>
+<script src="/subteno/frontend/chat.js"></script>
