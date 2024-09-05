@@ -3,7 +3,7 @@
 
 ## Installation and Usage
 
-1. Click the Copy button and then Download ZIP. Unzip and copy the subteno folder to the root of your site.
+1. Click the Copy button and then Download ZIP. Unzip and copy the **subteno** folder to the root of your site.
 2. The file **/subteno/backend/config_sample.php** should be renamed to **/subteno/backend/config.php**
 2. To work, you need 3 MySQL (MariaDB) tables. To do this, you need to enter the following in **/subteno/backend/config.php**:
 ```
@@ -28,7 +28,10 @@ Subteno::install();
 define('BOT_TOKEN', 'bot_token_here');
 ```
 7. In the browser you need to enter **https://t.me/your_bot_name** go to the bot and send it a message *BOT_ADMIN_SECRET* from **/private/subteno/backend/config.php**
-8. For security, you need to deny access to the **backend** folder directly via the Internet, for this, for example, in Nginx
+
+## Safety
+
+For security, you need to deny access to the **backend** folder directly via the Internet, for this, for example, in Nginx
 ```
 location /subteno/backend/ {
     deny all;
