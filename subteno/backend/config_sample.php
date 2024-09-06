@@ -1,4 +1,6 @@
 <?php
+// en ru es fr de
+define('LANG', 'en');
 // Database hostname
 define('DB_HOST', 'localhost');
 // Database username

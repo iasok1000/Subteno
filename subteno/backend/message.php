@@ -10,7 +10,7 @@ if ($_SERVER["CONTENT_TYPE"] == 'application/x-www-form-urlencoded' || $_SERVER[
     $a_out['error'] = "unknown type CONTENT_TYPE";
 }
 $a_out = array();
-$a_out['messages'] = Subteno::ERROR_UNKNOWN_MESS;
+$a_out['messages'] = Language::trans('unknown error');
 $a_out['result'] = Subteno::ERROR_UNKNOWN;
 
 if (isset($a_in['token']) && $a_in['token'] !== '') {
@@ -37,12 +37,13 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
                 // “link” the manager’s chat with the bot to the site
                 Subteno::add_admin_chat(ADMIN_CHAT_TOKEN, $chat_id);
                 // send a welcome message to the manager
-                Subteno::apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => Subteno::TO_ADMIN_WELCOME));
-            } else if ($message_text == Subteno::FROM_ADMIN_CONNECTION_FINISH) {
+                // welcome message to managers after he sent BOT_ADMIN_SECRET, it comes with 1 message from the client
+                Subteno::apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => Language::trans('welcome to admin')));
+            } else if ($message_text == Language::trans('abbrev end connection')) {
                 // “untie” the manager’s chat with the bot from the site
                 Subteno::del_admin_chat(ADMIN_CHAT_TOKEN, $chat_id);
                 // send a message to the manager
-                Subteno::apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => Subteno::TO_ADMIN_BYE));
+                Subteno::apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => Language::trans('by to admin')));
             } else if ((strpos($message_text, "/") === 0)) {
                 // we ignore the bot's service commands
             } else {
@@ -71,15 +72,15 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
             $last_heart_beat_utc = $admin_chat['last_heart_beat_utc'];
             if (!empty($last_message_date_utc)) {
                 if ($now_utc > date_create($last_message_date_utc . ' UTC')->add(new DateInterval('PT' . Subteno::LAST_MESSAGE_TIMEOUT_MINUTES . 'M'))) {
-                    Subteno::end_chat($admin_chat, 'Time is up ' . Subteno::LAST_MESSAGE_TIMEOUT_MINUTES . ' min.');
-                    $a_out['messages'] = Subteno::ERROR_1_MESS;
+                    Subteno::end_chat($admin_chat, Language::trans('time is up') . ' ' . Subteno::LAST_MESSAGE_TIMEOUT_MINUTES . ' min.');
+                    $a_out['messages'] = Language::trans('error 1');
                     $a_out['result'] = Subteno::ERROR_1;
                 }
             }
             if (!empty($last_heart_beat_utc)) {
                 Subteno::log_with_sid('$last_heart_beat_utc:' . json_encode($last_heart_beat_utc));
                 if ($now_utc > date_create($last_heart_beat_utc . ' UTC')->add(new DateInterval('PT' . Subteno::LAST_HEART_BEAT_TIMEOUT_SECONDS . 'S'))) {
-                    Subteno::end_chat($admin_chat, 'No Heartbeat ' . Subteno::LAST_HEART_BEAT_TIMEOUT_SECONDS . ' sec');
+                    Subteno::end_chat($admin_chat, Language::trans('no heartbeat') . ' ' . Subteno::LAST_HEART_BEAT_TIMEOUT_SECONDS . ' sec');
                 }
             }
             $current_session_id = $admin_chat['current_session_id'];
@@ -88,14 +89,14 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
         if ($current_session_id != null) {
             if ($current_session_id != session_id()) {
                 $wrong_session_id = true;
-                Subteno::error(Subteno::ERROR_2_MESS . ' $admin_chat=' . json_encode($admin_chat));
-                $a_out['messages'] = Subteno::ERROR_2_MESS;
+                Subteno::error(Language::trans('error 2') . ' $admin_chat=' . json_encode($admin_chat));
+                $a_out['messages'] = Language::trans('error 2');
                 $a_out['result'] = Subteno::ERROR_2;
                 // we send to the manager that another client wants support
                 Subteno::apiRequest("sendMessage", [
                     'chat_id' => $admin_chat['chat_id'],
                     'parse_mode' => 'HTML',
-                    'text' => Subteno::TO_ADMIN_NEW_CLIENT
+                    'text' => Language::trans('new client to admin')
                 ]);
             }
         }
@@ -110,7 +111,7 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
                 }
             } else {
                 // you can send a service message that the session with the manager has ended
-                // $a_out['messages'] = Subteno::ERROR_7_MESS;
+                // $a_out['messages'] = Language::trans('error 7');
                 // or send nothing so as not to spam the client with useless messages
                 $a_out['messages'] = '';
                 $a_out['result'] = Subteno::ERROR_7;
@@ -122,7 +123,7 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
             }
         } else {
             Subteno::error('Wrong session_id ' . $current_session_id);
-            $a_out['messages'] = self::ERROR_5_MESS;
+            $a_out['messages'] = Language::trans('error 5');
             $a_out['result'] = Subteno::ERROR_5;
         }
         if ($admin_chat['dirty']) {
@@ -131,8 +132,9 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
             Subteno::update_admin_chat($admin_chat);
         }
     } else {
+        // in fact there is simply no manager
         Subteno::error(Subteno::ERROR_3_MESS_LOG);
-        $a_out['messages'] = Subteno::ERROR_3_MESS;
+        $a_out['messages'] = Language::trans('error 3');
         $a_out['result'] = Subteno::ERROR_3;
     }
 }

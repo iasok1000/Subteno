@@ -16,7 +16,7 @@ define('DB_PREFIX', 'S_');
 ```
 4. In the index.php file of your site, before the **body** tag, you need to insert the line
 ```
- require $_SERVER["DOCUMENT_ROOT"] . "/subteno/frontend/chat.php";
+ <?php require $_SERVER["DOCUMENT_ROOT"] . "/subteno/frontend/chat.php"; ?>
  </body>
 ```
 5. Go to your website, a button with a chat icon should appear at the bottom right, click on it, enter any message, click on the button with a paper airplane icon, an incoming message will appear **All managers are busy, try again later.**, do not pay attention to him attention. Now the necessary data should be created in the database. Now in **/private/subteno/backend/settings.php** you can comment out the line
