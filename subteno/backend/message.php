@@ -11,7 +11,7 @@ if ($_SERVER["CONTENT_TYPE"] == 'application/x-www-form-urlencoded' || $_SERVER[
 }
 $a_out = array();
 $a_out['messages'] = Language::trans('unknown error');
-$a_out['result'] = Subteno::ERROR_UNKNOWN;
+$a_out['result'] = Subteno::ERROR_0;
 
 if (isset($a_in['token']) && $a_in['token'] !== '') {
     $token = $a_in['token'];
@@ -133,7 +133,7 @@ if (isset($a_in['token']) && $a_in['token'] !== '') {
         }
     } else {
         // in fact there is simply no manager
-        Subteno::error(Subteno::ERROR_3_MESS_LOG);
+        Subteno::error('Invalid token. You need to bind the manager by asking him to send the message BOT_ADMIN_SECRET to his chat with the bot.');
         $a_out['messages'] = Language::trans('error 3');
         $a_out['result'] = Subteno::ERROR_3;
     }

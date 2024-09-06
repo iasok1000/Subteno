@@ -261,6 +261,18 @@ class Language
             } else if (self::$locale == 'de') {
                 return 'Auf Wiedersehen, wenn Sie noch weitere Fragen haben, schreiben Sie.';
             }
+        } else if (strtolower($mess) == 'message from client') {
+            if (self::$locale == 'en') {
+                return 'Message from the client';
+            } else if (self::$locale == 'ru') {
+                return 'Сообщение от клиента';
+            } else if (self::$locale == 'es') {
+                return 'Mensaje del cliente';
+            } else if (self::$locale == 'fr') {
+                return 'Message du client';
+            } else if (self::$locale == 'de') {
+                return 'Nachricht vom Kunden';
+            }
         } else if (strtolower($mess) == '') {
             if (self::$locale == 'en') {
                 return '';
@@ -341,11 +353,10 @@ class DIV_DB
 }
 class Subteno
 {
-    const ERROR_UNKNOWN = 'unknown_error';
+    const ERROR_0 = 'unknown_error';
     const ERROR_1 = 'manager_timeout';
     const ERROR_2 = 'admin_is_busy';
     const ERROR_3 = 'wrong_token';
-    const ERROR_3_MESS_LOG = 'Invalid token. You need to bind the manager by asking him to send the message BOT_ADMIN_SECRET to his chat with the bot.';
     const ERROR_4 = 'admin_chat_current_session_id_is_null';
     const ERROR_5 = 'wrong_session_id';
     const ERROR_6 = 'error api';
@@ -426,7 +437,7 @@ class Subteno
         $result = self::apiRequest("sendMessage", [
             'chat_id' => $admin_chat['chat_id'],
             'parse_mode' => 'HTML',
-            'text' => "<b>Message from the client:</b> " . $a_in['message_text']
+            'text' => '<b>' . Language::trans('message from client') . ':</b> ' . $a_in['message_text']
         ]);
         if ($result === false) {
             return [self::ERROR_6, Language::trans('error 6')];
