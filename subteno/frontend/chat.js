@@ -11,20 +11,20 @@ class Subteno {
     static send_clicked() {
         let text = document.getElementById('subteno_msg_input').value;
         if (!text) {
-            // this.error_alert("Please fill all the inputs");
+            // Subteno.error_alert("Please fill all the inputs");
             return;
         }
-        this.add_my_message_to_template(text);
-        this.pushMessage(text);
+        Subteno.add_my_message_to_template(text);
+        Subteno.pushMessage(text);
         document.getElementById('subteno_msg_input').value = '';
     }
     static update_his_messages() {
-        this.is_heart_beating = false;
-        this.getNewMessages();
+        Subteno.is_heart_beating = false;
+        Subteno.getNewMessages();
     }
     static error_alert(msg) {
         if (msg != '') {
-            this.add_his_message_to_template(msg, 'style="color:red;background-color:white;"');
+            Subteno.add_his_message_to_template(msg, 'style="color:red;background-color:white;"');
         }
     }
     static little_thumb_clicked() {
@@ -34,12 +34,12 @@ class Subteno {
         for (let i = 0; i < els.length; i++) {
             els[i].classList.add('little_thumb_minimize');
         }
-        this.is_chat_minimized = false;
+        Subteno.is_chat_minimized = false;
     }
     static subteno_button_clicked() {
         let el = document.getElementById('subteno_chat');
         el.classList.remove('subteno_minimized');
-        this.is_chat_minimized = false;
+        Subteno.is_chat_minimized = false;
     }
     static minimize_clicked() {
         let el = document.getElementById('subteno_chat');
@@ -48,12 +48,12 @@ class Subteno {
         for (let i = 0; i < els.length; i++) {
             els[i].classList.remove('little_thumb_minimize');
         }
-        this.is_chat_minimized = true;
+        Subteno.is_chat_minimized = true;
     }
     static add_his_message_to_template(msg, style = '') {
         let subteno_bb = document.getElementById('subteno_bottom_box');
         subteno_bb.innerHTML += '<div class="row message_row m-0"><div class="d-flex message his_message" ><div class="content px-2 rounded-2" ' + style + '>' + msg + '</div></div></div>';
-        this.scrollToBottom();
+        Subteno.scrollToBottom();
     }
     static my_scroll_top(el, value) {
         if (value === undefined) {
@@ -70,43 +70,43 @@ class Subteno {
         let subteno_bb = document.getElementById('subteno_bottom_box');
         let x = subteno_bb.offsetHeight;
         let subteno_inner = document.getElementById('subteno_inner');
-        this.my_scroll_top(subteno_inner, x);
+        Subteno.my_scroll_top(subteno_inner, x);
     }
     static add_my_message_to_template(msg) {
-        let elements = '<div id="msg' + this.message_id + '" class="row message_row m-0"><div class="d-flex flex-row-reverse message my_message"><div class="content px-2 rounded-2">' + msg + '</div></div></div>';
+        let elements = '<div id="msg' + Subteno.message_id + '" class="row message_row m-0"><div class="d-flex flex-row-reverse message my_message"><div class="content px-2 rounded-2">' + msg + '</div></div></div>';
         let subteno_bb = document.getElementById('subteno_bottom_box');
         subteno_bb.innerHTML += elements;
-        this.scrollToBottom();
-        this.message_id++;
+        Subteno.scrollToBottom();
+        Subteno.message_id++;
         return elements;
     }
     static async pushMessage(msg) {
         let obj = {};
         obj.func = 'func_1';
-        obj.token = this.chat_token;
+        obj.token = Subteno.chat_token;
         obj.message_text = msg;
-        let obj_out = await this.my_fetch(obj);
+        let obj_out = await Subteno.my_fetch(obj);
         if (obj_out.hasOwnProperty('result')) {
             if (obj_out.result === "ok") {
-                if (!this.first_msg_sent) {
-                    this.first_msg_sent = true;
+                if (!Subteno.first_msg_sent) {
+                    Subteno.first_msg_sent = true;
                 }
-                if (!this.is_heart_beating) {
-                    this.update_his_messages();
+                if (!Subteno.is_heart_beating) {
+                    Subteno.update_his_messages();
                 }
             } else if (obj_out.result != '') {
-                this.error_alert(obj_out.messages);
+                Subteno.error_alert(obj_out.messages);
             }
         } else {
-            this.is_heart_beating = false;
-            this.error_alert(this.error_1);
+            Subteno.is_heart_beating = false;
+            Subteno.error_alert(Subteno.error_1);
         }
     }
     static async getNewMessages() {
         let obj = {};
         obj.func = 'func_2';
-        obj.token = this.chat_token;
-        let obj_out = await this.my_fetch(obj);
+        obj.token = Subteno.chat_token;
+        let obj_out = await Subteno.my_fetch(obj);
         if (obj_out.hasOwnProperty('result')) {
             if (obj_out.result === "ok") {
                 let data = null;
@@ -114,28 +114,28 @@ class Subteno {
                     data = JSON.parse(obj_out.messages);
                 }
                 catch (e) {
-                    this.error_alert("Error, " + e.message);
-                    setTimeout(() => { this.update_his_messages(); }, this.update_his_messages_milliseconds);
+                    Subteno.error_alert("Error, " + e.message);
+                    setTimeout(() => { Subteno.update_his_messages(); }, Subteno.update_his_messages_milliseconds);
                     return;
                 }
                 for (let i = 0; i < data.length; i++) {
                     var text = data[i].message_text;
-                    this.add_his_message_to_template(text);
+                    Subteno.add_his_message_to_template(text);
                 };
-                if (!this.is_chat_minimized) {
-                    setTimeout(() => { this.update_his_messages(); }, this.update_his_messages_milliseconds);
-                    this.is_heart_beating = true;
+                if (!Subteno.is_chat_minimized) {
+                    setTimeout(() => { Subteno.update_his_messages(); }, Subteno.update_his_messages_milliseconds);
+                    Subteno.is_heart_beating = true;
                 }
             } else if (obj_out.result != '') {
-                this.is_heart_beating = false;
-                this.error_alert(obj_out.messages);
+                Subteno.is_heart_beating = false;
+                Subteno.error_alert(obj_out.messages);
             }
         } else {
-            this.is_heart_beating = false;
-            this.error_alert("Please check you internet connection.");
+            Subteno.is_heart_beating = false;
+            Subteno.error_alert("Please check you internet connection.");
         }
     }
-    static async my_fetch(x_in, url = this.ajax_url) {
+    static async my_fetch(x_in, url = Subteno.ajax_url) {
         let x_out = '{}';
         const response = await fetch(url, {
             method: 'POST',
