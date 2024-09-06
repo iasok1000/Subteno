@@ -1,3 +1,7 @@
+.flex-row-reverse {
+    flex-direction: row-reverse !important;
+}
+
 .my_message .content {
     background-color: #ffffff;
 }
